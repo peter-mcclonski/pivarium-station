@@ -12,3 +12,6 @@ class Sensor:
         self.stype = stype
         self.connType = connType
         self.hwAddress = hwAddress
+
+    def getStatus(self):
+        pass

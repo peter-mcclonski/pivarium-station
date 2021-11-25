@@ -1,5 +1,6 @@
 import Api
 from Sensor import Sensor
+from sensorimpl.DHT22 import DHT22
 
 
 class SensorManager:
@@ -17,4 +18,8 @@ class SensorManager:
         else:
             uuid = Api.requestUUID()
             config['uuid'] = uuid
-        self.sensors[uuid] = Sensor(uuid, stype, connType, hwAddress)
+
+        if connType == 'DHT22':
+            self.sensors[uuid] = DHT22(uuid, stype, connType, hwAddress)
+        else:
+            self.sensors[uuid] = Sensor(uuid, stype, connType, hwAddress)

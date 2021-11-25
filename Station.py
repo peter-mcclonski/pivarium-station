@@ -1,6 +1,7 @@
 import json
 import sys
 import os
+import time
 
 import Api
 from SensorManager import SensorManager
@@ -32,3 +33,8 @@ for filename in os.listdir('extensions'):
             json.dump(cfg, confFile, indent=4)
 
 Api.putSensorList(station_cfg['uuid'], sensorMngr.sensors)
+
+while True:
+    for sensor in sensorMngr.sensors.values():
+        print(sensor.getStatus())
+    time.sleep(5)
