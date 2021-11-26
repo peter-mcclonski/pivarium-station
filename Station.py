@@ -1,40 +1,29 @@
 import json
-import sys
 import os
-import time
 
 import Api
-from SensorManager import SensorManager
+import Util
+from SensorAgent import SensorAgent
 
-sensorMngr = SensorManager()
+
+station_cfg = {}
+
+
+def registerStation(cfg):
+    remote_cfg = Api.registerStation(cfg)
+    if not Util.cfgEqual(remote_cfg, cfg):
+        Util.updateCfg(remote_cfg, './station.json')
+    return remote_cfg
+
+
 with open('./station.json', 'r') as cfgFile:
     station_cfg = json.load(cfgFile)
 
-if 'uuid' not in station_cfg.keys():
-    station_cfg['uuid'] = Api.requestUUID()
-    with open('./station.json', 'w') as cfgFile:
-        json.dump(station_cfg, cfgFile, indent=4)
+station_cfg = registerStation(station_cfg)
+Util.stationID = station_cfg['uuid']
 
-Api.registerStation(station_cfg['uuid'])
-
-for filename in os.listdir('extensions'):
+for filename in os.listdir(station_cfg['extensionPath']):
     if not filename.endswith(".json"):
         continue
-    with open(os.path.join("extensions", filename), 'r') as confFile:
-        cfg = json.load(confFile)
+    SensorAgent(os.path.join(station_cfg['extensionPath'], filename)).start()
 
-    uuidPresent = 'uuid' in cfg.keys()
-
-    if cfg['ext'] == 'sensor':
-        sensorMngr.registerSensor(cfg)
-
-    if not uuidPresent:
-        with open(os.path.join("extensions", filename), 'w') as confFile:
-            json.dump(cfg, confFile, indent=4)
-
-Api.putSensorList(station_cfg['uuid'], sensorMngr.sensors)
-
-while True:
-    for sensor in sensorMngr.sensors.values():
-        print(sensor.getStatus())
-    time.sleep(5)

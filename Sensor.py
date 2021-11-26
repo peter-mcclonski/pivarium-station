@@ -1,3 +1,4 @@
+import time
 from typing import Literal
 
 
@@ -6,12 +7,20 @@ class Sensor:
     stype: list
     connType: Literal["dht22"]
     hwAddress: str
+    frequency: int
 
-    def __init__(self, uuid: str, stype: list, connType: Literal["dht22"], hwAddress: str):
-        self.uuid = uuid
-        self.stype = stype
-        self.connType = connType
-        self.hwAddress = hwAddress
+    def __init__(self, cfg):
+        self.uuid = cfg['uuid']
+        self.stype = cfg['stype']
+        self.connType = cfg['connType']
+        self.hwAddress = cfg['hwAddress']
+        self.frequency = cfg['frequency']
 
     def getStatus(self):
-        pass
+        return {
+            'sensor_id': self.uuid,
+            'ctime': time.time()
+        }
+
+    def __str__(self):
+        return f"Sensor[uuid={self.uuid},stype={self.stype},connType={self.connType},hwAddress={self.hwAddress},frequency={self.frequency}]"

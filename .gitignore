@@ -112,3 +112,5 @@ fabric.properties
 
 extensions/*.json
 *.json
+
+__pycache__/
