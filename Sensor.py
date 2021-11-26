@@ -19,7 +19,7 @@ class Sensor:
     def getStatus(self):
         return {
             'sensor_id': self.uuid,
-            'ctime': time.time()
+            'utime': time.time()
         }
 
     def __str__(self):

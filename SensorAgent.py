@@ -36,6 +36,5 @@ class SensorAgent(Thread):
             stat = self.sensor.getStatus()
             if stat is not None:
                 Api.sendStatus(stat)
-            print("Sent status")
             print(stat)
             time.sleep(self.sensor.frequency)
