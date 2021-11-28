@@ -14,8 +14,8 @@ class DHT22(Sensor):
         base = super().getStatus()
         try:
             base['status'] = {
-                'humidity': 40.2,
-                'temperature': 32.1
+                'humidity': "40.2",
+                'temperature': "32.1"
                 #'humidity': self.dht_device.humidity,
                 #'temperature': self.dht_device.temperature
             }

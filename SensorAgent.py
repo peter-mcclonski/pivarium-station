@@ -2,6 +2,7 @@ import time
 from threading import Thread
 
 import Api
+import SenseTask
 import Util
 from Sensor import Sensor
 
@@ -16,7 +17,6 @@ class SensorAgent(Thread):
         self.config = Util.loadConfig(cfgFileName)
         self.cfgFileName = cfgFileName
         self.register()
-        self.sensor = Util.extFromConfig(self.config)
 
     def register(self):
         if "stationID" not in self.config:
@@ -33,8 +33,5 @@ class SensorAgent(Thread):
 
     def run(self):
         while True:
-            stat = self.sensor.getStatus()
-            if stat is not None:
-                Api.sendStatus(stat)
-            print(stat)
-            time.sleep(self.sensor.frequency)
+            SenseTask.sense.delay(self.config)
+            time.sleep(self.config['frequency'])

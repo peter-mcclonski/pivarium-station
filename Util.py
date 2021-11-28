@@ -1,6 +1,12 @@
 import json
+from datetime import datetime
 
-from sensorimpl.DHT22 import DHT22
+from local_crontab import Converter
+import celery.utils.time
+import pytz
+from celerybeatmongo.models import PeriodicTask
+
+from DHT22 import DHT22
 
 
 stationID = ""
@@ -39,3 +45,15 @@ def extFromConfig(cfg: dict):
 
     if ctype == 'dht22':
         return DHT22(cfg)
+
+
+def to_utc_crontab(crontab: PeriodicTask.Crontab) -> PeriodicTask.Crontab:
+    ct_str = f"{crontab.minute} {crontab.hour} {crontab.day_of_month} {crontab.month_of_year} {crontab.day_of_week}"
+    utc_ct = Converter(ct_str, 'America/New_York').to_utc_cron().split(' ')
+    return PeriodicTask.Crontab(
+        minute=utc_ct[0],
+        hour=utc_ct[1],
+        day_of_month=utc_ct[2],
+        month_of_year=utc_ct[3],
+        day_of_week=utc_ct[4]
+    )

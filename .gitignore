@@ -114,3 +114,4 @@ extensions/*.json
 *.json
 
 __pycache__/
+celerybeat-schedule*
