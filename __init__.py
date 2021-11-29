@@ -44,7 +44,7 @@ def setup_periodic_tasks(station_cfg):
             'name': f"{cfg['uuid']}_periodic",
             'task': "SenseTask.sense",
             'args': [cfg],
-            'interval': PeriodicTask.Interval(every=30, period="seconds"),
+            'interval': PeriodicTask.Interval(every=10, period="seconds"),
             #'crontab': Util.to_utc_crontab(PeriodicTask.Crontab(minute='10', hour='1', day_of_week='*', day_of_month='*', month_of_year='*')),
             'enabled': True
         }
