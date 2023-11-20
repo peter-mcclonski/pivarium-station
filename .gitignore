@@ -115,3 +115,5 @@ extensions/*.json
 
 __pycache__/
 celerybeat-schedule*
+
+dist/

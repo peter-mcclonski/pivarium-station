@@ -1,6 +1,6 @@
 from celery_instance import celery as app
 
-from Api import sendStatus
+from src.app.Api import sendStatus
 from Util import extFromConfig
 
 

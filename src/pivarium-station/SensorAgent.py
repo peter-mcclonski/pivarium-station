@@ -1,10 +1,9 @@
 import time
 from threading import Thread
 
-import Api
-import SenseTask
+from src.app import Api, SenseTask
 import Util
-from Sensor import Sensor
+from src.app.Sensor import Sensor
 
 
 class SensorAgent(Thread):

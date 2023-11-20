@@ -1,12 +1,9 @@
 import json
-from datetime import datetime
 
 from local_crontab import Converter
-import celery.utils.time
-import pytz
 from celerybeatmongo.models import PeriodicTask
 
-from DHT22 import DHT22
+from src.app.DHT22 import DHT22
 
 
 stationID = ""

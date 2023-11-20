@@ -1,4 +1,3 @@
-import json
 import os
 
 from celery_instance import celery as app
